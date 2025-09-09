@@ -1,15 +1,15 @@
 "use client"
 import React, {useReducer,useContext,createContext} from "react";
 
-interface User {
+export interface User {
     name: string;
     age: number;
     email: string;
 }
-interface ActionaType {
-  type: "SAVE_USER" | "DELETE_USER";
-  payload: User | number;
-}
+type ActionaType =  { type: "SAVE_USER"; payload: User } | 
+                    { type: "DELETE_USER"; payload: number } | 
+                    { type: "EDIT_USER"; index: number; payload: User };
+
 interface Records {
     users: User[];
 }
@@ -36,6 +36,15 @@ export function reducer(state: Records,action: ActionaType): Records{
             const updatedUsers = [...state.users];
             updatedUsers.splice(action.payload as number, 1);
             return { ...state, users: updatedUsers };
+        }
+
+        case "EDIT_USER": {
+            const editUser = [...state.users];
+            editUser[action.index] = action.payload;
+
+            return{...state, users: editUser}
+
+
         }
 
         default:

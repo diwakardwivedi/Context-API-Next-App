@@ -1,9 +1,9 @@
 "use client"
 
-import { useData} from "./Store/DataProvider";
+import { useData } from "./Store/DataProvider";
 import React, { useState } from "react";
 
-function Input() {
+function UserInput() {
 
        interface user {
               name: string;
@@ -47,4 +47,4 @@ function Input() {
   )
 }
 
-export default Input;
+export default UserInput;
