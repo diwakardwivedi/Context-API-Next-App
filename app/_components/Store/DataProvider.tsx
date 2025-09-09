@@ -1,9 +1,7 @@
 "use client"
 import React, {useReducer,useContext,createContext} from "react";
-const DataContext = createContext({} as ContextType);
 
 interface User {
-    rollNo: number;
     name: string;
     age: number;
     email: string;
@@ -12,31 +10,31 @@ interface ActionaType {
   type: "SAVE_USER" | "DELETE_USER";
   payload: User | number;
 }
-interface StateType {
+interface Records {
     users: User[];
 }
 interface ContextType {
-    state: StateType;
+    state: Records;
     dispatch: React.Dispatch<ActionaType>
 }
 
-const initialState: StateType = {
+const DataContext = createContext({} as ContextType);
+
+const initialState: Records = {
     users: []
 };
 
-export function reducer(state: StateType,action: ActionaType): StateType{
+export function reducer(state: Records,action: ActionaType): Records{
     
     switch (action.type) {
         case "SAVE_USER":
-            return { ...state, users: [...state.users, action.payload as User]     
-        };
+            const rcds = [...state.users];
+            rcds.push(action.payload as User)
+            return {...state, users:rcds}
 
         case "DELETE_USER": {
-            // copy banayi
             const updatedUsers = [...state.users];
-            // payload index ko splice se remove kiya
             updatedUsers.splice(action.payload as number, 1);
-
             return { ...state, users: updatedUsers };
         }
 
@@ -47,11 +45,10 @@ export function reducer(state: StateType,action: ActionaType): StateType{
 
 export const DataProvider = ({children}:{children:React.ReactNode})=>{
     const [state,dispatch] = useReducer(reducer,initialState);
-    console.log(state);
     return (
-        <DataContext.Provider value={{state, dispatch}}>
+        <DataContext value={{state, dispatch}}>
             {children}
-        </DataContext.Provider>
+        </DataContext>
     )
 
 }

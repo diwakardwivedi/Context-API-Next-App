@@ -1,17 +1,16 @@
 "use client"
 
-import { useData } from "./Store/DataProvider";
+import { useData} from "./Store/DataProvider";
 import React, { useState } from "react";
 
 function Input() {
 
        interface user {
-              rollNo: string;
               name: string;
-              age: string;
+              age: number;
               email: string;
        }
-       const initialData: user = {rollNo:"",name:"",age:"",email:""};
+       const initialData: user = {name:"",age:0,email:""};
 
        const {dispatch} = useData();
        const [user,setUser] = useState(initialData);
@@ -21,21 +20,12 @@ function Input() {
        }
        
        const handleSave = ()=>{
-              const dataSave = {
-                     ...user,
-                     rollNo: Number(user.rollNo),
-                     age: Number(user.age)
-              };
-              if(dataSave.age > 0 && dataSave.rollNo > 0) dispatch({type: "SAVE_USER", payload: dataSave});
+              dispatch({type: "SAVE_USER", payload: user });
               setUser(initialData);
        }
 
   return (
     <div className="border-2 rounded-3xl w-xl mt-5 m-auto">
-          <input type="number" name="rollNo" value={user.rollNo} placeholder="Enter Roll No" 
-                 onChange={handleChange}
-                 className="flex m-auto mt-14 border-1 w-70 h-13 px-5 rounded-xl"
-          />
           <input type="text" name="name" value={user.name} placeholder="Enter Name" 
                  className="flex m-auto mt-7 border-1 w-70 h-13 px-5 rounded-xl"
                  onChange={handleChange}

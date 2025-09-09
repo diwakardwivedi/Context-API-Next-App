@@ -16,13 +16,11 @@ function ProfileCard() {
                 state.users.map((user, id)=>(
                     <div key={id} className="bg-gray-500 shadow-md rounded-lg p-6 w-72 border border-gray-200">
                         <h2 className="text-xl font-bold mb-2">{user.name}</h2>
-                        <p><span className="font-semibold">Roll No:</span> {user.rollNo}</p>
                         <p><span className="font-semibold">Age:</span> {user.age}</p>
                         <p><span className="font-semibold">Email:</span> {user.email}</p>
                         <button className="flex m-auto mt-7 px-4 py-2 bg-blue-600 text-white rounded cursor-pointer"
                                 onClick={()=>dispatch({type:"DELETE_USER", payload:id})}    
                         >
-                            
                             Delete User
                         </button>
                     </div>
